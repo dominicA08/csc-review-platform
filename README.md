@@ -1,4 +1,4 @@
-# Philippine Civil Service Exam (CSC) Digital Reviewer Platform
+# Civil Service Exam (CSE) Digital Reviewer Platform
 
 An interactive, high-performance web-based exam prep platform designed to help students review for the Philippine Civil Service Examination (Professional and Sub-Professional levels). Built using modern React 19, Next.js 16 (App Router), Tailwind CSS v4, and Supabase.
 
