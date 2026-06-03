@@ -90,6 +90,18 @@ const NAV_ITEMS = [
       </svg>
     ),
   },
+  {
+    id: 'terms',
+    label: 'Terms & Conditions',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+      </svg>
+    ),
+  },
 ]
 
 function StatusBadge({ status }: { status: ExamStatus }) {
@@ -159,6 +171,21 @@ export default function Dashboard() {
 
   const [modules, setModules] = useState<DashboardExamModule[]>(DASHBOARD_MODULES)
   const [accuracy, setAccuracy] = useState<string>('0.0%')
+
+  const [isTermsOpen, setIsTermsOpen] = useState(false)
+  const [isTermsVisible, setIsTermsVisible] = useState(false)
+
+  useEffect(() => {
+    if (activeNav === 'terms') {
+      setIsTermsOpen(true)
+      const timer = setTimeout(() => setIsTermsVisible(true), 50)
+      return () => clearTimeout(timer)
+    } else {
+      setIsTermsVisible(false)
+      const timer = setTimeout(() => setIsTermsOpen(false), 300)
+      return () => clearTimeout(timer)
+    }
+  }, [activeNav])
 
   useEffect(() => {
     const checkUser = async () => {
@@ -479,6 +506,138 @@ export default function Dashboard() {
           <div className="h-10" />
         </div>
       </main>
+
+      {/* ── Terms & Conditions Modal Overlay ────────────────────────── */}
+      {isTermsOpen && (
+        <div
+          className={`fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/35 dark:bg-slate-950/65 backdrop-blur-xs transition-all duration-300 ease-in-out ${
+            isTermsVisible ? 'opacity-100 backdrop-blur-md' : 'opacity-0 pointer-events-none'
+          }`}
+          onClick={() => setActiveNav('dashboard')}
+        >
+          <div
+            className={`bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden transition-all duration-300 transform ease-in-out ${
+              isTermsVisible ? 'scale-100 translate-y-0 opacity-100' : 'scale-95 translate-y-8 opacity-0'
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-5 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/20 shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-blue-600/10 dark:bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                  </svg>
+                </div>
+                <div>
+                  <h2 className="text-base font-black text-slate-800 dark:text-slate-100 tracking-tight uppercase">Terms & Conditions</h2>
+                  <p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider mt-0.5">Last updated: June 2026</p>
+                </div>
+              </div>
+              
+              <button
+                onClick={() => setActiveNav('dashboard')}
+                aria-label="Close terms"
+                className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-150 cursor-pointer"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Content Body */}
+            <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-6 scrollbar-thin">
+              {/* Section 1 */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-mono font-black text-blue-600 dark:text-blue-400 bg-blue-600/10 dark:bg-blue-500/10 px-2 py-0.5 rounded-md">01</span>
+                  <h3 className="text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-wider">Use of Website</h3>
+                </div>
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed pl-7">
+                  The materials provided on this website are intended solely for educational and review purposes. While we strive to provide accurate and updated content, the CSC Reviewer Platform does not guarantee success in any Civil Service Examination or other government-related examinations.
+                </p>
+              </div>
+
+              {/* Section 2 */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-mono font-black text-blue-600 dark:text-blue-400 bg-blue-600/10 dark:bg-blue-500/10 px-2 py-0.5 rounded-md">02</span>
+                  <h3 className="text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-wider">User Responsibilities</h3>
+                </div>
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed pl-7">
+                  By using this website, you agree to use the content only for personal, non-commercial study purposes. You must not attempt to gain unauthorized access, disrupt the platform's functionality, or misuse any part of the service.
+                </p>
+              </div>
+
+              {/* Section 3 */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-mono font-black text-blue-600 dark:text-blue-400 bg-blue-600/10 dark:bg-blue-500/10 px-2 py-0.5 rounded-md">03</span>
+                  <h3 className="text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-wider">Termination of Access</h3>
+                </div>
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed pl-7">
+                  We reserve the right to suspend or terminate access to the platform if a user violates these Terms and Conditions, engages in fraudulent activities, or attempts to compromise the integrity and security of the website.
+                </p>
+              </div>
+
+              {/* Section 4: Disclaimer */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/10 dark:border-amber-500/20 space-y-3">
+                <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                    <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
+                  </svg>
+                  <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider">Disclaimer & Attributions</h3>
+                </div>
+                <div className="space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                  <p>
+                    CSC Reviewer Platform is an independent educational project and is not affiliated with, endorsed by, or connected to the Civil Service Commission (CSC), Professional Regulation Commission (PRC), or any other government agency.
+                  </p>
+                  <p>
+                    Practice questions, quizzes, and reviewer materials are based on or adapted from publicly available reviewer resources, including materials published by Teach Pinas. All respective rights to original content remain with their respective owners.
+                  </p>
+                  <p>
+                    The platform is intended solely as a study aid and review tool. Content provided on this website may not reflect actual examination questions and does not guarantee examination results or passing scores.
+                  </p>
+                </div>
+              </div>
+
+              {/* Section 5: Source Reference */}
+              <div className="space-y-2 pl-2">
+                <h4 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Source Reference</h4>
+                <a
+                  href="https://www.teachpinas.com/civil-service-exam-reviewer-pdf-with-answer-keys/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-500/30 hover:bg-blue-600/5 transition-all duration-150 cursor-pointer"
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                  </svg>
+                  <span>Teach Pinas CSC Reviewer PDF</span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="opacity-60">
+                    <polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            {/* Footer Actions */}
+            <div className="px-6 py-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/20 flex items-center justify-end gap-3 shrink-0">
+              <button
+                onClick={() => setActiveNav('dashboard')}
+                className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-slate-100 dark:hover:bg-white text-xs font-black text-white dark:text-slate-900 uppercase tracking-wider transition-all duration-150 hover:scale-[1.02] cursor-pointer"
+              >
+                I Understand & Dismiss
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
