@@ -256,7 +256,8 @@ export default function Dashboard() {
   }
 
   const completedCount = modules.filter((e) => e.status === 'completed').length
-  const userInitial = user.email?.charAt(0).toUpperCase() ?? 'U'
+  const userName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User'
+  const userInitial = userName.charAt(0).toUpperCase()
   const totalQuestions = modules.reduce((sum, m) => sum + m.questionCount, 0)
 
   return (
@@ -306,8 +307,8 @@ export default function Dashboard() {
               </div>
               {sidebarOpen && (
                 <div className="overflow-hidden flex-1 min-w-0">
-                  <p className="text-slate-700 dark:text-slate-300 text-xs font-bold truncate">{user.email}</p>
-                  <p className="text-slate-400 dark:text-slate-500 text-[10px] font-bold">Student Account</p>
+                  <p className="text-slate-700 dark:text-slate-300 text-xs font-bold truncate">{userName}</p>
+                  <p className="text-slate-400 dark:text-slate-500 text-[10px] font-bold truncate">{user.email}</p>
                 </div>
               )}
             </div>
