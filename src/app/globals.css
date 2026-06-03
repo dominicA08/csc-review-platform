@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+/* Class-based dark mode (html.dark) — required for ThemeProvider toggle */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: var(--font-inter, ui-sans-serif, system-ui, sans-serif);
+}
+
+:root {
+  color-scheme: light;
+  --surface-page: #f8fafc;
+  --surface-panel: #ffffff;
+  --surface-chart: #f1f5f9;
+  --border-default: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-muted: #64748b;
+  --chart-grid: #cbd5e1;
+  --chart-axis: #94a3b8;
+}
+
+.dark {
+  color-scheme: dark;
+  --surface-page: #020617;
+  --surface-panel: #0f172a;
+  --surface-chart: #020617;
+  --border-default: #1e293b;
+  --text-primary: #f1f5f9;
+  --text-muted: #94a3b8;
+  --chart-grid: #1e293b;
+  --chart-axis: #64748b;
+}
+
+body {
+  background-color: var(--surface-page);
+  color: var(--text-primary);
+}
+
+.chart-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.25rem;
+}
+
+.chart-scroll-inner {
+  width: 100%;
+  min-width: min(100%, 20rem);
+}
+
+@media (min-width: 640px) {
+  .chart-scroll-inner {
+    min-width: 30rem;
+  }
+}
+
+.chart-panel {
+  border-radius: 1rem;
+  border: 1px solid var(--border-default);
+  background: color-mix(in srgb, var(--surface-chart) 88%, transparent);
+  padding: 1rem;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 6%, transparent);
+}
+
+.dark .chart-panel {
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 3%, transparent);
+}
