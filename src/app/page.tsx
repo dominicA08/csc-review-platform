@@ -66,13 +66,6 @@ export default function AuthPage() {
 
         {/* Card Header */}
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <span className="w-6 h-[1px] bg-slate-300 dark:bg-slate-700" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500">
-              Republic of the Philippines
-            </span>
-            <span className="w-6 h-[1px] bg-slate-300 dark:bg-slate-700" />
-          </div>
           <h1 className="text-3xl font-black tracking-tight text-slate-900 dark:text-slate-100 uppercase leading-none mb-3">
             CSC <span className="bg-gradient-to-r from-blue-600 to-indigo-500 dark:from-blue-400 dark:to-indigo-300 bg-clip-text text-transparent">Digital</span><br />Reviewer
           </h1>
